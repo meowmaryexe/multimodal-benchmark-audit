@@ -4,6 +4,7 @@ from datasets import load_dataset
 from transformers import Qwen2VLForConditionalGeneration, AutoProcessor
 import torch
 
+
 def categorize_question(question):
     q = question.lower()
 
@@ -27,6 +28,7 @@ def categorize_question(question):
 
     return "lookup"
 
+
 model_name = "Qwen/Qwen2-VL-2B-Instruct"
 
 # -----------------------------
@@ -46,18 +48,20 @@ model = Qwen2VLForConditionalGeneration.from_pretrained(
 dataset = load_dataset("lmms-lab/ChartQA", split="test")
 
 correct = 0
-total = 500 
+total = len(dataset)
+
 category_correct = {
     "lookup": 0,
     "compositional": 0,
-    "yesno": 0
+    "yesno": 0,
 }
 
 category_total = {
     "lookup": 0,
     "compositional": 0,
-    "yesno": 0
+    "yesno": 0,
 }
+
 # -----------------------------
 # Main loop (NO IMAGE)
 # -----------------------------
@@ -70,7 +74,6 @@ for i in range(total):
 
     gold = str(example["answer"]).strip()
 
-    # 🔥 NO IMAGE INCLUDED HERE
     messages = [
         {
             "role": "user",
@@ -92,7 +95,9 @@ for i in range(total):
     inputs = processor(
         text=[text],
         return_tensors="pt",
-    ).to(model.device)
+    )
+
+    inputs = inputs.to(model.device)
 
     generated_ids = model.generate(**inputs, max_new_tokens=16)
 
@@ -107,7 +112,6 @@ for i in range(total):
     print(f"Gold: {gold}")
     print(f"Pred: {pred}")
 
-    # normalization (same as before)
     pred_clean = pred.strip().lower().rstrip(".,")
     gold_clean = gold.strip().lower().rstrip(".,")
 
