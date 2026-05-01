@@ -75,13 +75,21 @@ for i in range(total):
     gold = str(example["answer"]).strip()
     image = example["image"]
 
-    prompt = f"USER: <image>\n{question}\nAnswer with only the final answer. Do not explain.\nASSISTANT:"
+    prompt = (
+        f"USER: <image>\n"
+        f"You are answering a chart question. Carefully read the chart values before answering.\n"
+        f"Question: {question}\n"
+        f"Answer with only the final answer. Do not explain.\n"
+        f"ASSISTANT:"
+    )
 
     inputs = processor(
         text=prompt,
         images=image,
         return_tensors="pt",
-    ).to(model.device)
+    )
+
+    inputs = inputs.to(model.device)
 
     generated_ids = model.generate(
         **inputs,
@@ -116,3 +124,4 @@ for cat in ["lookup", "compositional", "yesno"]:
     if category_total[cat] > 0:
         acc = category_correct[cat] / category_total[cat]
         print(f"{cat}: {acc:.3f} ({category_correct[cat]}/{category_total[cat]})")
+        
