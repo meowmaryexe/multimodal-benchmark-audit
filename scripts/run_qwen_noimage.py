@@ -46,7 +46,7 @@ model = Qwen2VLForConditionalGeneration.from_pretrained(
 dataset = load_dataset("lmms-lab/ChartQA", split="test")
 
 correct = 0
-total = 30
+total = 500 
 category_correct = {
     "lookup": 0,
     "compositional": 0,
