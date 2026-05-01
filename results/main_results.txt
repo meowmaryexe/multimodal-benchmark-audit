@@ -1,0 +1,40 @@
+=== Main Results: ChartQA Visual Reliance ===
+
+Qwen 2B (WITH IMAGE, full test set)
+Accuracy: 0.662
+lookup: 0.740 (1434/1938)
+compositional: 0.375 (200/534)
+yesno: 0.750 (21/28)
+
+Qwen 2B (NO IMAGE, full test set)
+Accuracy: 0.0476
+lookup: 0.033 (64/1938)
+compositional: 0.082 (44/534)
+yesno: 0.393 (11/28)
+
+Qwen 7B (WITH IMAGE, first 500 samples)
+Accuracy: 0.654
+lookup: 0.731 (231/316)
+compositional: 0.491 (80/163)
+yesno: 0.762 (16/21)
+
+Qwen 7B (NO IMAGE, first 500 samples)
+Accuracy: 0.114
+lookup: 0.041 (13/316)
+compositional: 0.202 (33/163)
+yesno: 0.524 (11/21)
+
+--- Accuracy Drop (2B: Image → No Image) ---
+lookup:        0.740 → 0.033  (−0.707)
+compositional: 0.375 → 0.082  (−0.293)
+yesno:         0.750 → 0.393  (−0.357)
+
+
+
+--- Accuracy Drop (7B: Image → No Image) ---
+lookup:        0.731 → 0.041  (−0.690)
+compositional: 0.491 → 0.202  (−0.289)
+yesno:         0.762 → 0.524  (−0.238)
+
+=== Main Results: ChartQA Visual Reliance ===
+Models evaluated under image vs no-image conditions. 7B evaluated on first 500 samples.

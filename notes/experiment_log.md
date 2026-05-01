@@ -31,47 +31,46 @@ Load 30 samples from ChartQA and print one example (image + question)
 Counterfactual modality reliance audits
 
 ## Goal of today:
-Run full-scale ChartQA evaluation to measure visual reliance (image vs no-image) and category-level behavior
+Run ChartQA experiments with and without images and see how much performance actually depends on vision
 
 ## What I implemented:
-- Full evaluation pipeline for Qwen2-VL-2B on ChartQA test set (~2500 samples)
-- Image condition (standard VLM input)
-- No-image condition (text-only ablation)
+- Full evaluation pipeline for Qwen2-VL-2B on ChartQA (full test set)
+- Image condition (normal input)
+- No-image condition (text-only)
+- Same pipeline reused for Qwen2-VL-7B (500 sample subset due to compute)
 - Question categorization:
-  - lookup (direct value retrieval)
-  - compositional (difference, ratio, average, etc.)
+  - lookup
+  - compositional
   - yes/no
 - Accuracy tracking:
-  - overall accuracy
-  - per-category accuracy
-- Clean normalization + exact match evaluation
+  - overall
+  - per category
 
 ## What worked:
-- Successfully ran full dataset with image condition
-- Stable category distributions:
-  - lookup: 1938
-  - compositional: 534
-  - yes/no: 28
-- Strong and interpretable performance gap:
-  - lookup: 0.740
-  - compositional: 0.375
-- Category split clearly separates retrieval vs reasoning behavior
+- Both 2B and 7B pipelines ran end-to-end without major bugs
+- Category breakdown stayed consistent across runs
+- No-image condition behaved as expected (large drops, not random outputs)
+- Results were stable enough to compare across models
 
-## What failed:
-- Earlier script versions accidentally dropped image inputs (fixed)
-- LLaVA baseline produced weak/unreliable results → not suitable as primary comparison
-- Minor debugging with indentation / processor inputs
+## What didn’t / friction:
+- Colab GPU limits slowed iteration
+- Model loading / setup took longer than expected
+- Had to manually save outputs to avoid losing results
+- Earlier bug where image input wasn’t actually being passed (fixed)
 
 ## Observations:
-- Large performance gap between lookup and compositional (~36.5 points)
-- Model performs well at extracting values from charts
-- Compositional reasoning remains significantly weaker even with image access
-- Category decomposition is meaningful and not noisy
-- Suggests different underlying mechanisms for retrieval vs reasoning
+- Removing the image hurts lookup much more than compositional
+- This pattern shows up in both 2B and 7B
+- Compositional performance drops, but not nearly as much
+- 7B improves compositional accuracy overall, but still shows the same pattern
+- Yes/no feels noisy because there are very few samples
+
+## Open questions:
+- Why is compositional reasoning less affected by removing the image?
+- Is the model actually reasoning, or using language shortcuts?
+- Would giving the wrong image actively hurt performance (instead of just removing it)?
+- Is this specific to ChartQA or more general?
 
 ## Next smallest step:
-- Complete NO-IMAGE full dataset run
-- Measure:
-  - lookup drop
-  - compositional drop
-- Compute differential dependence on visual input
+- Decide whether to run an image-swap (wrong image) experiment
+- Start organizing results + writing while everything is fresh
