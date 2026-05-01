@@ -74,3 +74,16 @@ Run ChartQA experiments with and without images and see how much performance act
 ## Next smallest step:
 - Decide whether to run an image-swap (wrong image) experiment
 - Start organizing results + writing while everything is fresh
+
+## Update: Image Swap Experiment (May 1)
+
+Ran 7B with wrong-image condition (200 samples).
+
+Observations:
+- Lookup performance remains relatively high (~0.60)
+- Compositional performance similar to no-image (~0.17)
+- Result is less clean than expected
+
+Notes:
+- Adjacent image swap may not be a strong counterfactual
+- Needs better control or reinterpretation

@@ -24,6 +24,12 @@ lookup: 0.041 (13/316)
 compositional: 0.202 (33/163)
 yesno: 0.524 (11/21)
 
+Qwen 7B (WRONG IMAGE, 200 samples)
+Accuracy: 0.48
+lookup: 0.605
+compositional: 0.175
+yesno: 0.769
+
 --- Accuracy Drop (2B: Image → No Image) ---
 lookup:        0.740 → 0.033  (−0.707)
 compositional: 0.375 → 0.082  (−0.293)
