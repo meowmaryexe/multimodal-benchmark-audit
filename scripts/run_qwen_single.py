@@ -44,7 +44,7 @@ messages = [
         "role": "user",
         "content": [
             {"type": "image", "image": image},  # image input
-            {"type": "text", "text": question}, # question text
+            {"type": "text", "text": f"{question}\nAnswer with only the final answer. Do not explain."},
         ],
     }
 ]
