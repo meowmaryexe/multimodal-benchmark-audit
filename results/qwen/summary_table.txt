@@ -1,0 +1,6 @@
+Model: Qwen2-VL-2B
+
+                WITH IMAGE    NO IMAGE
+Lookup:         
+Compositional:  
+Yes/No:         

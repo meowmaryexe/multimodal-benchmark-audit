@@ -1,0 +1,40 @@
+# Qwen2-VL-2B — ChartQA Full Results
+
+## WITH IMAGE
+
+Overall: 
+Lookup: 
+Compositional: 
+Yes/No: 
+
+Counts:
+Lookup: 
+Compositional: 
+Yes/No: 
+
+
+## WITHOUT IMAGE
+
+Overall: 
+Lookup: 
+Compositional: 
+Yes/No: 
+
+Counts:
+Lookup: 
+Compositional: 
+Yes/No: 
+
+
+## DROPS (Image → No Image)
+
+Lookup drop: 
+Compositional drop: 
+Yes/No drop: 
+
+
+## NOTES
+
+- 
+- 
+-

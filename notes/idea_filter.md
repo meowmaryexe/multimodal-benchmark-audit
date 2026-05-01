@@ -4,41 +4,62 @@
 Counterfactual modality reliance audits for multimodal benchmarks
 
 ## Core Question
-Do multimodal benchmarks actually require images for correct answers?
+To what extent do vision-language models rely on visual input when answering chart-based questions?
 
-## Why this might be novel
-- Many benchmarks assume multimodal reasoning
-- Few standardized counterfactual audits across datasets
-- Potential mismatch between reported performance and actual visual reliance
+## Working Hypothesis
+Visual input is critical for direct value retrieval tasks, but compositional reasoning performance is substantially weaker and less dependent on the presence of visual input.
 
-## Closest prior work
-- VQA language priors
-- Benchmark ablations (no-image tests)
-- Multimodal robustness work
+## Motivation
+Multimodal benchmarks such as ChartQA are often used as evidence of visual reasoning ability. However, aggregate accuracy does not distinguish between:
+- retrieving values from the chart
+- performing multi-step reasoning over those values
 
-## Why reviewers might reject it
-- “This is already known”
-- Weak or obvious results
-- Too small-scale
-- No generalizable insight
+This raises the question of whether strong performance reflects genuine visual grounding or partial reliance on non-visual heuristics.
 
-## Smallest convincing experiment (Day 1–3)
-- Run model on 30 ChartQA samples
-- Compare:
-  - normal vs no-image
-- Measure accuracy drop
+## Approach
+We evaluate a vision-language model under two conditions:
+- standard setting (image + question)
+- counterfactual setting (question only, no image)
 
-## Data needed
-- 30 ChartQA samples
-- images + questions
+We further decompose questions into:
+- lookup (direct value extraction)
+- compositional (difference, ratio, average, etc.)
+- yes/no (binary comparisons)
 
-## Time risk
-- Low for initial test
-- Medium for scaling across benchmarks
+This allows us to measure how visual dependence varies across task types.
 
-## Acceptance upside
-- Medium → High if strong signal found
-- Especially if results generalize across benchmarks
+## Empirical Signal (in progress)
+- Significant performance gap between lookup and compositional questions in the image condition
+- Early evidence that:
+  - lookup performance drops sharply without image input
+  - compositional performance degrades less
+
+## Key Insight (target)
+Visual grounding is not uniform across tasks: models rely heavily on images for retrieval, but compositional reasoning remains limited and partially independent of visual input.
+
+## Relation to Prior Work
+- Language priors in VQA (models answering without images)
+- Multimodal robustness and ablation studies
+- ChartQA and structured reasoning benchmarks
+
+## Differentiation
+- Focus on structured chart reasoning rather than general VQA
+- Explicit task decomposition (lookup vs compositional)
+- Direct comparison of visual vs non-visual conditions
+
+## Risks
+- Findings may be dataset-specific (ChartQA only)
+- Single-model evidence may limit generality
+- Results could be interpreted as a known limitation without deeper analysis
+
+## Strengthening Plan
+- Full dataset evaluation (image and no-image)
+- Add a second strong model for validation
+- Report absolute and relative performance drops by category
+- Present results with a single clear comparison figure
+
+## Significance
+If validated, these results suggest that benchmark performance may overestimate true visual reasoning ability, particularly for compositional tasks.
 
 ## Verdict
-PURSUE (pending dead-end test)
+PURSUE — initial results indicate a clear and interpretable failure mode worth formalizing
