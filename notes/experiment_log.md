@@ -26,4 +26,20 @@ Set up project + GitHub + notes
 ## Next smallest step:
 Load 30 samples from ChartQA and print one example (image + question)
 
----
+## Date: May 1
+## Direction: 
+Counterfactual modality reliance audits 
+
+## Goal of today:
+Start Day 1 experiment (dataset loading + inspection)
+
+## What I implemented:
+
+## WHat worked: 
+
+## What failed:
+
+## Observations:
+
+## Next smallest step:
+Load ChartQA and inspect 5 examples
