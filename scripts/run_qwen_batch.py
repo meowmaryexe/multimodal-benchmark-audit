@@ -5,6 +5,20 @@ from transformers import Qwen2VLForConditionalGeneration, AutoProcessor
 from qwen_vl_utils import process_vision_info
 import torch
 
+def categorize_question(question):
+    q = question.lower()
+
+    # Yes/No
+    if q.startswith("is") or q.startswith("are") or q.startswith("does"):
+        return "yesno"
+    
+    # Arithmetic
+    if any(word in q for word in ["difference", "average", "ratio", "sum", "more than", "less than"]):
+        return "arithmetic"
+    
+    # Otherwise -> lookup
+    return "lookup"
+
 model_name = "Qwen/Qwen2-VL-2B-Instruct"
 
 # -----------------------------
@@ -26,6 +40,18 @@ dataset = load_dataset("lmms-lab/ChartQA", split="test")
 correct = 0
 total = 30
 
+category_correct = {
+    "lookup": 0,
+    "arithmetic": 0,
+    "yesno": 0
+}
+
+category_total = {
+    "lookup": 0,
+    "arithmetic": 0,
+    "yesno": 0
+}
+
 # -----------------------------
 # Main loop
 # -----------------------------
@@ -33,6 +59,8 @@ for i in range(total):
     example = dataset[i]
 
     question = example["question"]
+    category = categorize_question(question)
+    category_total[category] += 1
     gold = str(example["answer"]).strip()
     image = example["image"]
 
@@ -87,8 +115,15 @@ for i in range(total):
 
     if pred_clean == gold_clean:
         correct += 1
+        category_correct[category] += 1
 
 # -----------------------------
 # Final accuracy
 # -----------------------------
 print("\nAccuracy:", correct / total)
+print("\n--- Category Breakdown ---")
+
+for cat in ["lookup", "arithmetic", "yesno"]:
+    if category_total[cat] > 0:
+        acc = category_correct[cat] / category_total[cat]
+        print(f"{cat}: {acc:.3f} ({category_correct[cat]}/{category_total[cat]})")
