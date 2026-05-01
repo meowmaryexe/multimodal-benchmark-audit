@@ -1,0 +1,91 @@
+# This script runs Qwen2-VL on ONE ChartQA example
+
+from datasets import load_dataset
+from transformers import Qwen2VLForConditionalGeneration, AutoProcessor
+from qwen_vl_utils import process_vision_info
+import torch
+
+# -----------------------------
+# Step 1: Load dataset example
+# -----------------------------
+
+dataset = load_dataset("lmms-lab/ChartQA", split="test")
+example = dataset[0]
+
+question = example["question"]
+gold_answer = example["answer"]
+image = example["image"]
+
+print("Question:", question)
+print("Gold answer:", gold_answer)
+print("Image size:", image.size)
+
+# -----------------------------
+# Step 2: Load model + processor
+# -----------------------------
+
+model_name = "Qwen/Qwen2-VL-2B-Instruct"
+
+processor = AutoProcessor.from_pretrained(model_name)
+
+model = Qwen2VLForConditionalGeneration.from_pretrained(
+    model_name,
+    torch_dtype=torch.float32,   # safe for CPU
+    device_map="auto",           # lets PyTorch choose CPU
+)
+
+# -----------------------------
+# Step 3: Format input (IMPORTANT)
+# -----------------------------
+
+# Qwen expects a chat-style input format
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {"type": "image", "image": image},  # image input
+            {"type": "text", "text": question}, # question text
+        ],
+    }
+]
+
+# Convert into model-ready text format
+text = processor.apply_chat_template(
+    messages,
+    tokenize=False,
+    add_generation_prompt=True,
+)
+
+# Extract image inputs in correct format
+image_inputs, video_inputs = process_vision_info(messages)
+
+# Tokenize everything together
+inputs = processor(
+    text=[text],
+    images=image_inputs,
+    videos=video_inputs,
+    padding=True,
+    return_tensors="pt",
+)
+
+# Move inputs to model device (CPU in your case)
+inputs = inputs.to(model.device)
+
+# -----------------------------
+# Step 4: Generate answer
+# -----------------------------
+
+generated_ids = model.generate(
+    **inputs,
+    max_new_tokens=32,  # limit output length
+)
+
+# Convert tokens back to readable text
+output_text = processor.batch_decode(
+    generated_ids,
+    skip_special_tokens=True,
+    clean_up_tokenization_spaces=False,
+)
+
+print("\nModel output:")
+print(output_text[0])
