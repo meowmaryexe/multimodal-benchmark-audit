@@ -8,15 +8,24 @@ import torch
 def categorize_question(question):
     q = question.lower()
 
-    # Yes/No
+    compositional_keywords = [
+        "difference",
+        "average",
+        "ratio",
+        "sum",
+        "how many more",
+        "how many fewer",
+        "greater than",
+        "more than",
+        "less than",
+    ]
+
+    if any(word in q for word in compositional_keywords):
+        return "compositional"
+
     if q.startswith("is") or q.startswith("are") or q.startswith("does"):
         return "yesno"
-    
-    # Arithmetic
-    if any(word in q for word in ["difference", "average", "ratio", "sum", "more than", "less than"]):
-        return "arithmetic"
-    
-    # Otherwise -> lookup
+
     return "lookup"
 
 model_name = "Qwen/Qwen2-VL-2B-Instruct"
@@ -42,13 +51,13 @@ total = 30
 
 category_correct = {
     "lookup": 0,
-    "arithmetic": 0,
+    "compositional": 0,
     "yesno": 0
 }
 
 category_total = {
     "lookup": 0,
-    "arithmetic": 0,
+    "compositional": 0,
     "yesno": 0
 }
 
@@ -123,7 +132,7 @@ for i in range(total):
 print("\nAccuracy:", correct / total)
 print("\n--- Category Breakdown ---")
 
-for cat in ["lookup", "arithmetic", "yesno"]:
+for cat in ["lookup", "compositional", "yesno"]:
     if category_total[cat] > 0:
         acc = category_correct[cat] / category_total[cat]
         print(f"{cat}: {acc:.3f} ({category_correct[cat]}/{category_total[cat]})")
