@@ -2,39 +2,41 @@
 
 ## WITH IMAGE
 
-Overall: 
-Lookup: 
-Compositional: 
-Yes/No: 
+Overall: 0.662
+Lookup: 0.740
+Compositional: 0.375
+Yes/No: 0.750
 
 Counts:
-Lookup: 
-Compositional: 
-Yes/No: 
+Lookup: 1938
+Compositional: 534
+Yes/No: 28
 
 
 ## WITHOUT IMAGE
 
-Overall: 
-Lookup: 
-Compositional: 
-Yes/No: 
+Overall: 0.0476
+Lookup: 0.033
+Compositional: 0.082
+Yes/No: 0.393
 
 Counts:
-Lookup: 
-Compositional: 
-Yes/No: 
+Lookup: 1938
+Compositional: 534
+Yes/No: 28
 
 
 ## DROPS (Image → No Image)
 
-Lookup drop: 
-Compositional drop: 
-Yes/No drop: 
+Lookup drop: -0.707
+Compositional drop: -0.293
+Yes/No drop: -0.357
 
 
 ## NOTES
 
-- 
-- 
--
+- Large asymmetry in visual dependence across categories
+- Lookup performance collapses without image (~70 point drop)
+- Compositional performance also drops, but substantially less (~29 point drop)
+- Indicates both rely on vision, but retrieval is far more tightly grounded
+- Suggests compositional reasoning remains a bottleneck even with visual input

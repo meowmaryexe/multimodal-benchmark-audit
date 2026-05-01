@@ -1,6 +1,6 @@
 Model: Qwen2-VL-2B
 
-                WITH IMAGE    NO IMAGE
-Lookup:         
-Compositional:  
-Yes/No:         
+                WITH IMAGE    NO IMAGE    DROP
+Lookup          0.740         0.033       -0.707
+Compositional   0.375         0.082       -0.293
+Yes/No          0.750         0.393       -0.357   
