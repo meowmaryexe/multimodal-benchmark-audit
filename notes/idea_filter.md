@@ -30,11 +30,11 @@ Compare accuracy across conditions and categories.
 ---
 
 ## Current Signal
-Observed across Qwen2-VL 2B (full set) and 7B (subset):
+Observed across Qwen2-VL 2B (full set), Qwen2-VL 7B (subset), and InternVL2-4B (subset):
 
-- Removing the image causes a large drop in lookup performance (~−0.70)
-- Compositional performance drops less (~−0.29)
-- This gap is consistent across model scale
+- Removing the image causes a large drop in lookup performance (~−0.60 to −0.70)
+- Compositional performance drops less (~−0.27 to −0.30)
+- This gap is consistent across model scale and model families
 - Full subtype analysis shows:
   - all compositional subtypes benefit significantly from visual input
   - performance remains uniformly limited across operations (~0.32–0.44 with image)
@@ -49,6 +49,7 @@ Observed across Qwen2-VL 2B (full set) and 7B (subset):
 - Compositional reasoning is not highly subtype-dependent, but is uniformly constrained across operations
 - Visual input helps compositional reasoning, but does not close the performance gap with lookup tasks
 - Aggregate benchmark scores mask these structural differences
+- The observed pattern is consistent across distinct model families (Qwen, InternVL), suggesting a structural property rather than a model-specific artifact
 
 ---
 
@@ -56,28 +57,27 @@ Observed across Qwen2-VL 2B (full set) and 7B (subset):
 - Why does visual input improve compositional reasoning without enabling high accuracy?
 - What limits performance across all compositional operations?
 - To what extent are yes/no questions answerable via language priors?
-- Does this pattern generalize beyond the Qwen model family?
+- Does this pattern hold across additional datasets beyond ChartQA?
 
 ---
 
 ## Risks
-- May be specific to ChartQA
-- Only one model family tested
+- May be partially specific to ChartQA
+- Only two model families tested
 - Results are descriptive without a mechanistic explanation
-- Could be interpreted as known multimodal limitations without stronger generalization evidence
+- Could be interpreted as known multimodal limitations without stronger theoretical grounding
 
 ---
 
 ## Next Steps
-- Add second model (different architecture) to test generalization of observed pattern
-- Compare image vs no-image behavior across model families
-- Build final table/figure highlighting task-dependent visual reliance
+- Finalize result presentation (table + single clear comparison figure)
+- Frame contribution relative to prior work on language priors in VQA
+- Begin paper writing (abstract, introduction, positioning)
 
 ---
 
 ## Status
 Core experiments complete:
-- Image vs no-image (2B full, 7B subset)
-- Full subtype analysis (2B)
-
-Next step: cross-model validation.
+- Image vs no-image (Qwen 2B full, Qwen 7B subset)
+- Full subtype analysis (Qwen 2B)
+- Cross-model validation (InternVL2-4B)
