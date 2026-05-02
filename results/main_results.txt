@@ -1,46 +1,97 @@
 === Main Results: ChartQA Visual Reliance ===
 
-Qwen 2B (WITH IMAGE, full test set)
+Models evaluated under image vs no-image conditions.
+Qwen 2B uses full test set (~2500 samples).
+Qwen 7B uses subset (first 500 samples).
+
+---
+
+## Qwen 2B (Full Test Set)
+
+WITH IMAGE
 Accuracy: 0.662
 lookup: 0.740 (1434/1938)
 compositional: 0.375 (200/534)
 yesno: 0.750 (21/28)
 
-Qwen 2B (NO IMAGE, full test set)
+NO IMAGE
 Accuracy: 0.0476
 lookup: 0.033 (64/1938)
 compositional: 0.082 (44/534)
 yesno: 0.393 (11/28)
 
-Qwen 7B (WITH IMAGE, first 500 samples)
+---
+
+## Qwen 7B (First 500 Samples)
+
+WITH IMAGE
 Accuracy: 0.654
 lookup: 0.731 (231/316)
 compositional: 0.491 (80/163)
 yesno: 0.762 (16/21)
 
-Qwen 7B (NO IMAGE, first 500 samples)
+NO IMAGE
 Accuracy: 0.114
 lookup: 0.041 (13/316)
 compositional: 0.202 (33/163)
 yesno: 0.524 (11/21)
 
-Qwen 7B (WRONG IMAGE, 200 samples)
+---
+
+## Accuracy Drop (Image → No Image)
+
+Qwen 2B
+lookup:        0.740 → 0.033  (−0.707)
+compositional: 0.375 → 0.082  (−0.293)
+yesno:         0.750 → 0.393  (−0.357)
+
+Qwen 7B
+lookup:        0.731 → 0.041  (−0.690)
+compositional: 0.491 → 0.202  (−0.289)
+yesno:         0.762 → 0.524  (−0.238)
+
+---
+
+## Image Swap (Preliminary Robustness Check, 7B, 200 samples)
+
+WRONG IMAGE
 Accuracy: 0.48
 lookup: 0.605
 compositional: 0.175
 yesno: 0.769
 
---- Accuracy Drop (2B: Image → No Image) ---
-lookup:        0.740 → 0.033  (−0.707)
-compositional: 0.375 → 0.082  (−0.293)
-yesno:         0.750 → 0.393  (−0.357)
+Note:
+- Adjacent-image swap used
+- Result is exploratory and not used as primary evidence
 
+---
 
+## Subtype Analysis (Qwen 2B, 500-sample pilot)
 
---- Accuracy Drop (7B: Image → No Image) ---
-lookup:        0.731 → 0.041  (−0.690)
-compositional: 0.491 → 0.202  (−0.289)
-yesno:         0.762 → 0.524  (−0.238)
+lookup
+image: 0.647 (200/309)
+no_image: 0.036 (11/309)
 
-=== Main Results: ChartQA Visual Reliance ===
-Models evaluated under image vs no-image conditions. 7B evaluated on first 500 samples.
+compositional_difference
+image: 0.457 (16/35)
+no_image: 0.029 (1/35)
+
+compositional_average
+image: 0.077 (2/26)
+no_image: 0.077 (2/26)
+
+compositional_ratio
+image: 0.136 (3/22)
+no_image: 0.000 (0/22)
+
+compositional_sum_compare
+image: 0.297 (11/37)
+no_image: 0.027 (1/37)
+
+yesno
+image: 0.620 (44/71)
+no_image: 0.549 (39/71)
+
+Note:
+- Pilot run (500 samples)
+- Full dataset run pending

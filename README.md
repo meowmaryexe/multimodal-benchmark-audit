@@ -6,7 +6,7 @@ This project studies how vision-language models (VLMs) use visual input when ans
 
 Multimodal benchmarks such as ChartQA are often used as evidence of visual reasoning ability. However, it is unclear whether models truly rely on visual information or partially exploit learned textual patterns.
 
-This work evaluates **how much visual input actually matters**, and whether that dependence varies across different types of questions.
+This work evaluates **when visual input actually matters**, and how that dependence varies across different types of questions.
 
 ---
 
@@ -20,21 +20,34 @@ We evaluate models under two conditions:
 Performance is analyzed by question type:
 
 - **Lookup** — direct value retrieval from the chart  
-- **Compositional** — multi-step reasoning (differences, ratios, averages)  
+- **Compositional** — multi-step reasoning (difference, ratio, average, etc.)  
 - **Yes/No** — binary comparisons  
 
-This setup isolates **when visual input is necessary vs. when models can rely on language alone**.
+We then further decompose compositional questions into finer subtypes to analyze failure modes.
 
 ---
 
-## Main Observation
+## Main Findings
 
-Visual reliance is **not uniform across tasks**:
+### 1. Visual reliance is task-dependent
 
 - Lookup questions depend heavily on visual input  
-- Compositional questions show substantially weaker dependence  
+- Compositional questions show weaker dependence  
 
 This pattern is consistent across model scale (Qwen2-VL 2B → 7B).
+
+---
+
+### 2. Compositional reasoning is not uniform
+
+Subtype analysis reveals that compositional performance varies significantly by operation:
+
+- **Difference** questions show meaningful visual dependence  
+- **Average** and **ratio** questions remain weak even with image input  
+- **Sum/compare** questions fall in between  
+- **Yes/no** questions show minimal dependence on visual input  
+
+This indicates that compositional reasoning is not a single capability, but a collection of distinct behaviors.
 
 ---
 
@@ -72,8 +85,9 @@ This pattern is consistent across model scale (Qwen2-VL 2B → 7B).
 These results suggest that benchmark performance may overstate multimodal reasoning:
 
 - Visual grounding is critical for direct retrieval  
-- Multi-step reasoning is partially supported by language patterns  
-- Aggregate accuracy masks this difference  
+- Compositional reasoning contains multiple distinct failure modes  
+- Some operations (e.g., averages, ratios) are poorly supported even with visual input  
+- Aggregate accuracy masks these differences  
 
 The consistency across model scale indicates this is a **structural property of model behavior**, not a small-model artifact.
 
@@ -81,13 +95,14 @@ The consistency across model scale indicates this is a **structural property of 
 
 ## Repository Structure
 
-- `scripts/` — evaluation pipelines (image / no-image)
-- `results/` — aggregated outputs and summaries
-- `notes/` — experiment logs and research direction
+- `scripts/` — evaluation pipelines and analysis scripts  
+- `results/` — experiment outputs and summaries  
+- `notes/` — logs and research direction  
 
 ---
 
 ## Status
 
-Core counterfactual experiments are complete for Qwen2-VL 2B and 7B.  
-Additional robustness checks are planned.
+- Core counterfactual experiments complete (2B, 7B)  
+- Subtype analysis validated on 500-sample pilot  
+- Full subtype analysis in progress  

@@ -87,3 +87,17 @@ Observations:
 Notes:
 - Adjacent image swap may not be a strong counterfactual
 - Needs better control or reinterpretation
+
+## Update: Subtype Analysis (May 1)
+
+Ran 500-sample pilot for compositional subtype breakdown.
+
+Key observations:
+- Compositional performance is highly non-uniform
+- Difference questions show strong visual dependence
+- Average questions show near-zero improvement from image input
+- Ratio questions remain very low accuracy
+- Yes/no questions largely insensitive to image
+
+Conclusion:
+Compositional reasoning is not a single failure mode; performance varies significantly by operation type.
