@@ -1,8 +1,8 @@
 === Main Results: ChartQA Visual Reliance ===
 
 Models evaluated under image vs no-image conditions.
-Qwen 2B uses full test set (~2500 samples).
-Qwen 7B uses subset (first 500 samples).
+Qwen 2B uses the full ChartQA test set.
+Qwen 7B uses the first 500 samples.
 
 ---
 
@@ -52,13 +52,13 @@ yesno:         0.762 → 0.524  (−0.238)
 
 ---
 
-## Image Swap (Preliminary Robustness Check, 7B, 200 samples)
+## Image Swap (Preliminary Robustness Check, Qwen 7B, 200 Samples)
 
 WRONG IMAGE
-Accuracy: 0.48
-lookup: 0.605
-compositional: 0.175
-yesno: 0.769
+Accuracy: 0.480
+lookup: 0.605 (75/124)
+compositional: 0.175 (11/63)
+yesno: 0.769 (10/13)
 
 Note:
 - Adjacent-image swap used
@@ -66,32 +66,39 @@ Note:
 
 ---
 
-## Subtype Analysis (Qwen 2B, 500-sample pilot)
+## Subtype Analysis (Qwen 2B, Full Test Set)
 
 lookup
-image: 0.647 (200/309)
-no_image: 0.036 (11/309)
+image: 0.747 (1388/1859)
+no_image: 0.034 (63/1859)
+drop: −0.713
 
 compositional_difference
-image: 0.457 (16/35)
-no_image: 0.029 (1/35)
+image: 0.324 (48/148)
+no_image: 0.014 (2/148)
+drop: −0.310
 
 compositional_average
-image: 0.077 (2/26)
-no_image: 0.077 (2/26)
+image: 0.381 (56/147)
+no_image: 0.014 (2/147)
+drop: −0.367
 
 compositional_ratio
-image: 0.136 (3/22)
-no_image: 0.000 (0/22)
+image: 0.380 (27/71)
+no_image: 0.042 (3/71)
+drop: −0.338
 
 compositional_sum_compare
-image: 0.297 (11/37)
-no_image: 0.027 (1/37)
+image: 0.440 (81/184)
+no_image: 0.011 (2/184)
+drop: −0.429
 
 yesno
-image: 0.620 (44/71)
-no_image: 0.549 (39/71)
+image: 0.615 (56/91)
+no_image: 0.527 (48/91)
+drop: −0.088
 
 Note:
-- Pilot run (500 samples)
-- Full dataset run pending
+- Full dataset run
+- Compositional subtypes show broadly similar dependence on image input
+- Yes/no questions show much weaker dependence on image input

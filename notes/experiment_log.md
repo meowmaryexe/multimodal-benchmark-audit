@@ -101,3 +101,16 @@ Key observations:
 
 Conclusion:
 Compositional reasoning is not a single failure mode; performance varies significantly by operation type.
+
+## Update: Subtype Analysis (Full Dataset)
+
+Ran full ChartQA test set for subtype breakdown.
+
+Observations:
+- All compositional subtypes show similar performance (~0.32–0.44 with image)
+- Large drop without image across all compositional types
+- Earlier pilot overestimated subtype differences
+- Visual grounding consistently helps, but reasoning remains limited
+
+Conclusion:
+Compositional reasoning is uniformly constrained rather than highly subtype-dependent.

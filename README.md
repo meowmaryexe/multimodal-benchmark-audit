@@ -23,7 +23,7 @@ Performance is analyzed by question type:
 - **Compositional** — multi-step reasoning (difference, ratio, average, etc.)  
 - **Yes/No** — binary comparisons  
 
-We then further decompose compositional questions into finer subtypes to analyze failure modes.
+We then further decompose compositional questions into finer subtypes to test whether performance varies across reasoning operations.
 
 ---
 
@@ -38,16 +38,16 @@ This pattern is consistent across model scale (Qwen2-VL 2B → 7B).
 
 ---
 
-### 2. Compositional reasoning is not uniform
+### 2. Compositional reasoning is uniformly limited
 
-Subtype analysis reveals that compositional performance varies significantly by operation:
+Full subtype analysis shows that compositional performance is relatively consistent across operations:
 
-- **Difference** questions show meaningful visual dependence  
-- **Average** and **ratio** questions remain weak even with image input  
-- **Sum/compare** questions fall in between  
-- **Yes/no** questions show minimal dependence on visual input  
+- All compositional subtypes benefit significantly from visual input  
+- Performance remains moderate across operations (~0.32–0.44 with image)  
+- Large drops occur without image input across all subtypes  
+- Yes/no questions show much weaker dependence on visual input  
 
-This indicates that compositional reasoning is not a single capability, but a collection of distinct behaviors.
+This suggests that compositional reasoning is not highly subtype-dependent, but is uniformly constrained across different operations.
 
 ---
 
@@ -85,9 +85,9 @@ This indicates that compositional reasoning is not a single capability, but a co
 These results suggest that benchmark performance may overstate multimodal reasoning:
 
 - Visual grounding is critical for direct retrieval  
-- Compositional reasoning contains multiple distinct failure modes  
-- Some operations (e.g., averages, ratios) are poorly supported even with visual input  
-- Aggregate accuracy masks these differences  
+- Compositional reasoning improves with visual input but remains uniformly limited across operations  
+- Yes/no questions can often be answered without strong visual grounding  
+- Aggregate accuracy masks these structural differences  
 
 The consistency across model scale indicates this is a **structural property of model behavior**, not a small-model artifact.
 
@@ -104,5 +104,5 @@ The consistency across model scale indicates this is a **structural property of 
 ## Status
 
 - Core counterfactual experiments complete (2B, 7B)  
-- Subtype analysis validated on 500-sample pilot  
-- Full subtype analysis in progress  
+- Full subtype analysis complete (Qwen2-VL 2B)  
+- Cross-model validation in progress  

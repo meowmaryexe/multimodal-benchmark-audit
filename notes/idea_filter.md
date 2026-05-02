@@ -35,43 +35,49 @@ Observed across Qwen2-VL 2B (full set) and 7B (subset):
 - Removing the image causes a large drop in lookup performance (~−0.70)
 - Compositional performance drops less (~−0.29)
 - This gap is consistent across model scale
-- Initial subtype analysis suggests compositional reasoning is not uniform:
-  - difference questions show stronger visual dependence
-  - average and ratio questions remain weak even with image input
-  - yes/no results are less reliable due to sample size and possible language priors
+- Full subtype analysis shows:
+  - all compositional subtypes benefit significantly from visual input
+  - performance remains uniformly limited across operations (~0.32–0.44 with image)
+  - large drops without image across all compositional types
+- Yes/no questions show relatively small performance drop, suggesting partial reliance on language patterns
 
 ---
 
-## Interpretation (tentative)
-- Visual dependence appears strongly task-dependent
-- Retrieval behavior is highly sensitive to image removal
-- Compositional reasoning contains multiple failure modes rather than one broad category
-- Aggregate benchmark scores may hide these differences
+## Interpretation (updated)
+- Visual dependence is strongly task-dependent (lookup vs compositional vs yes/no)
+- Retrieval behavior is tightly coupled to visual input
+- Compositional reasoning is not highly subtype-dependent, but is uniformly constrained across operations
+- Visual input helps compositional reasoning, but does not close the performance gap with lookup tasks
+- Aggregate benchmark scores mask these structural differences
 
 ---
 
 ## Open Questions
-- Why do average and ratio questions remain weak even with visual input?
-- Which compositional operations benefit most from image access?
-- Are yes/no questions partially answerable from language priors?
-- Does this subtype structure hold on the full dataset?
+- Why does visual input improve compositional reasoning without enabling high accuracy?
+- What limits performance across all compositional operations?
+- To what extent are yes/no questions answerable via language priors?
+- Does this pattern generalize beyond the Qwen model family?
 
 ---
 
 ## Risks
 - May be specific to ChartQA
 - Only one model family tested
-- Subtype labels are heuristic and need careful framing
-- Could be interpreted as known benchmark shortcut behavior without clear contribution
+- Results are descriptive without a mechanistic explanation
+- Could be interpreted as known multimodal limitations without stronger generalization evidence
 
 ---
 
 ## Next Steps
-- Run full subtype analysis with checkpointing
-- Use subtype breakdown to build a stronger table/figure
-- Decide whether image-swap belongs as a small robustness note or should be left out
+- Add second model (different architecture) to test generalization of observed pattern
+- Compare image vs no-image behavior across model families
+- Build final table/figure highlighting task-dependent visual reliance
 
 ---
 
 ## Status
-Core image/no-image experiments are complete; 500-sample subtype pilot shows promising structure. Full subtype run pending.
+Core experiments complete:
+- Image vs no-image (2B full, 7B subset)
+- Full subtype analysis (2B)
+
+Next step: cross-model validation.
