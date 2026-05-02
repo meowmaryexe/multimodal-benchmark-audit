@@ -34,7 +34,7 @@ We then further decompose compositional questions into finer subtypes to test wh
 - Lookup questions depend heavily on visual input  
 - Compositional questions show weaker dependence  
 
-This pattern is consistent across model scale (Qwen2-VL 2B → 7B).
+This pattern is consistent across model scale (Qwen2-VL 2B → 7B) and across model families (Qwen, InternVL).
 
 ---
 
@@ -71,12 +71,22 @@ This suggests that compositional reasoning is not highly subtype-dependent, but 
 
 ---
 
+### InternVL2-4B (first 500 samples)
+
+| Condition | Lookup | Compositional |
+|----------|--------|---------------|
+| With Image | 0.628 | 0.400 |
+| No Image   | 0.029 | 0.124 |
+
+---
+
 ### Accuracy Drop (Image → No Image)
 
 | Model | Lookup Drop | Compositional Drop |
 |------|------------|--------------------|
-| 2B   | −0.707     | −0.293             |
-| 7B   | −0.690     | −0.289             |
+| 2B (Qwen) | −0.707 | −0.293 |
+| 7B (Qwen) | −0.690 | −0.289 |
+| 4B (InternVL) | −0.599 | −0.276 |
 
 ---
 
@@ -89,7 +99,7 @@ These results suggest that benchmark performance may overstate multimodal reason
 - Yes/no questions can often be answered without strong visual grounding  
 - Aggregate accuracy masks these structural differences  
 
-The consistency across model scale indicates this is a **structural property of model behavior**, not a small-model artifact.
+The consistency across model scale and across model families indicates this is a **structural property of model behavior**, not a model-specific artifact.
 
 ---
 
@@ -103,6 +113,6 @@ The consistency across model scale indicates this is a **structural property of 
 
 ## Status
 
-- Core counterfactual experiments complete (2B, 7B)  
+- Core counterfactual experiments complete (Qwen2-VL 2B full, 7B subset)  
 - Full subtype analysis complete (Qwen2-VL 2B)  
-- Cross-model validation in progress  
+- Cross-model validation complete (InternVL2-4B)  
