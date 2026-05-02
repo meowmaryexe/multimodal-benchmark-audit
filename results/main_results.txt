@@ -2,7 +2,7 @@
 
 Models evaluated under image vs no-image conditions.
 Qwen 2B uses the full ChartQA test set.
-Qwen 7B uses the first 500 samples.
+Qwen 7B and InternVL2-4B use the first 500 samples.
 
 ---
 
@@ -100,5 +100,33 @@ drop: −0.088
 
 Note:
 - Full dataset run
-- Compositional subtypes show broadly similar dependence on image input
+- Compositional subtypes show similar levels of dependence on image input
 - Yes/no questions show much weaker dependence on image input
+
+---
+
+## InternVL2-4B (First 500 Samples)
+
+WITH IMAGE
+lookup: 0.628 (194/309)
+compositional: 0.400 (68/170)
+yesno: 0.762 (16/21)
+
+NO IMAGE
+lookup: 0.029 (9/309)
+compositional: 0.124 (21/170)
+yesno: 0.476 (10/21)
+
+---
+
+## Accuracy Drop (InternVL2-4B)
+
+lookup:        0.628 → 0.029  (−0.599)
+compositional: 0.400 → 0.124  (−0.276)
+yesno:         0.762 → 0.476  (−0.286)
+
+Note:
+- Pattern matches Qwen results
+- Lookup performance shows the largest drop without image input
+- Compositional performance degrades less
+- Suggests task-dependent visual reliance generalizes across model families
