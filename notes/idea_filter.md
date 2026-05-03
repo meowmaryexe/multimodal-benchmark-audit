@@ -10,8 +10,9 @@ To what extent do vision-language models rely on visual input when answering cha
 Multimodal benchmarks such as ChartQA are often used as evidence of visual reasoning ability. However, aggregate accuracy does not distinguish between:
 - retrieving values from the chart
 - performing multi-step reasoning over those values
+- answering questions using partial or non-visual cues
 
-This makes it unclear whether strong performance reflects genuine visual grounding or partial reliance on non-visual patterns.
+This makes it unclear whether strong performance reflects genuine visual grounding or mixed reliance on visual and non-visual signals.
 
 ---
 
@@ -29,55 +30,75 @@ Compare accuracy across conditions and categories.
 
 ---
 
-## Current Signal
-Observed across Qwen2-VL 2B (full set), Qwen2-VL 7B (subset), and InternVL2-4B (subset):
+## Current Signal (validated)
+
+Observed across:
+- Qwen2-VL 2B (full test set)
+- Qwen2-VL 7B (500 samples)
+- InternVL2-4B (500 samples)
+
+Key patterns:
 
 - Removing the image causes a large drop in lookup performance (~−0.60 to −0.70)
-- Compositional performance drops less (~−0.27 to −0.30)
-- This gap is consistent across model scale and model families
-- Full subtype analysis shows:
-  - all compositional subtypes benefit significantly from visual input
-  - performance remains uniformly limited across operations (~0.32–0.44 with image)
-  - large drops without image across all compositional types
-- Yes/no questions show relatively small performance drop, suggesting partial reliance on language patterns
+- Compositional performance drops less (~−0.27 to −0.29)
+- Yes/no performance shows weaker and less consistent dependence on visual input
+
+Additional validation:
+- Patterns are consistent across model scale (2B → 7B)
+- Patterns generalize across model families (Qwen → InternVL)
+- Confidence intervals show:
+  - strong separation for lookup
+  - consistent but smaller separation for compositional
+  - overlapping intervals for yes/no in some cases
 
 ---
 
 ## Interpretation (updated)
-- Visual dependence is strongly task-dependent (lookup vs compositional vs yes/no)
+
+- Visual reliance is strongly task-dependent
 - Retrieval behavior is tightly coupled to visual input
-- Compositional reasoning is not highly subtype-dependent, but is uniformly constrained across operations
-- Visual input helps compositional reasoning, but does not close the performance gap with lookup tasks
-- Aggregate benchmark scores mask these structural differences
-- The observed pattern is consistent across distinct model families (Qwen, InternVL), suggesting a structural property rather than a model-specific artifact
+- Compositional reasoning benefits from visual input but remains limited
+- Yes/no questions are partially answerable without strong visual grounding
+- Aggregate benchmark accuracy conflates distinct capabilities:
+  - visually grounded retrieval
+  - partially visual reasoning
+  - weakly visual or non-visual judgment
 
 ---
 
 ## Open Questions
+
 - Why does visual input improve compositional reasoning without enabling high accuracy?
-- What limits performance across all compositional operations?
-- To what extent are yes/no questions answerable via language priors?
-- Does this pattern hold across additional datasets beyond ChartQA?
+- What limits performance across compositional operations?
+- To what extent are yes/no questions driven by language priors?
+- Does this pattern generalize beyond ChartQA?
 
 ---
 
 ## Risks
-- May be partially specific to ChartQA
-- Only two model families tested
-- Results are descriptive without a mechanistic explanation
-- Could be interpreted as known multimodal limitations without stronger theoretical grounding
+
+- May be specific to ChartQA
+- Limited number of model families tested
+- Results are descriptive rather than mechanistic
+- Could be interpreted as known multimodal limitations without clear domain-specific insight
 
 ---
 
 ## Next Steps
-- Finalize result presentation (table + single clear comparison figure)
-- Frame contribution relative to prior work on language priors in VQA
-- Begin paper writing (abstract, introduction, positioning)
+
+- Finalize figure and paper framing
+- Position work relative to VQA language priors and multimodal ablation literature
+- Emphasize benchmark interpretation contribution rather than performance improvement
 
 ---
 
 ## Status
+
 Core experiments complete:
-- Image vs no-image (Qwen 2B full, Qwen 7B subset)
-- Full subtype analysis (Qwen 2B)
-- Cross-model validation (InternVL2-4B)
+- Image vs no-image (Qwen2B full, Qwen7B subset, InternVL subset)
+- Subtype analysis (Qwen2B full)
+- Cross-model validation (InternVL)
+- Statistical validation (confidence intervals)
+
+Current focus:
+- Final framing, writing, and positioning for submission
