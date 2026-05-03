@@ -4,9 +4,9 @@
 
 This project studies how vision-language models (VLMs) use visual input when answering chart-based questions.
 
-Multimodal benchmarks such as ChartQA are often used as evidence of visual reasoning ability. However, it is unclear whether models truly rely on visual information or partially exploit learned textual patterns.
+Multimodal benchmarks such as ChartQA are widely used as evidence of visual reasoning ability. However, aggregate accuracy does not distinguish between visually grounded behavior and reliance on non-visual patterns.
 
-This work evaluates **when visual input actually matters**, and how that dependence varies across different types of questions.
+This work evaluates **when visual input actually matters**, and shows that benchmark performance reflects a mixture of distinct behaviors rather than a single notion of “visual reasoning.”
 
 ---
 
@@ -23,31 +23,41 @@ Performance is analyzed by question type:
 - **Compositional** — multi-step reasoning (difference, ratio, average, etc.)  
 - **Yes/No** — binary comparisons  
 
-We then further decompose compositional questions into finer subtypes to test whether performance varies across reasoning operations.
+We further decompose compositional questions into subtypes to analyze whether reasoning performance varies across operations.
 
 ---
 
 ## Main Findings
 
-### 1. Visual reliance is task-dependent
+### 1. Visual reliance is strongly task-dependent
 
 - Lookup questions depend heavily on visual input  
 - Compositional questions show weaker dependence  
+- Yes/no questions exhibit the weakest and least consistent dependence  
 
-This pattern is consistent across model scale (Qwen2-VL 2B → 7B) and across model families (Qwen, InternVL).
+This pattern holds across model scale (Qwen2-VL 2B → 7B) and across model families (Qwen, InternVL).
 
 ---
 
-### 2. Compositional reasoning is uniformly limited
+### 2. Compositional reasoning remains limited
 
-Full subtype analysis shows that compositional performance is relatively consistent across operations:
+- Visual input improves compositional performance  
+- However, accuracy remains moderate across operations (~0.32–0.44)  
+- Large drops occur without image input across all compositional subtypes  
 
-- All compositional subtypes benefit significantly from visual input  
-- Performance remains moderate across operations (~0.32–0.44 with image)  
-- Large drops occur without image input across all subtypes  
-- Yes/no questions show much weaker dependence on visual input  
+This suggests that visual input is necessary but not sufficient for strong reasoning performance.
 
-This suggests that compositional reasoning is not highly subtype-dependent, but is uniformly constrained across different operations.
+---
+
+### 3. Benchmark accuracy conflates distinct capabilities
+
+ChartQA performance reflects a mixture of:
+
+- visually grounded retrieval  
+- partially visual compositional reasoning  
+- weakly visual or non-visual binary judgment  
+
+As a result, aggregate benchmark scores do not cleanly measure visual grounding.
 
 ---
 
@@ -84,22 +94,21 @@ This suggests that compositional reasoning is not highly subtype-dependent, but 
 
 | Model | Lookup Drop | Compositional Drop |
 |------|------------|--------------------|
-| 2B (Qwen) | −0.707 | −0.293 |
-| 7B (Qwen) | −0.690 | −0.289 |
-| 4B (InternVL) | −0.599 | −0.276 |
+| Qwen2B | −0.707 | −0.293 |
+| Qwen7B | −0.690 | −0.289 |
+| InternVL2-4B | −0.599 | −0.276 |
 
 ---
 
 ## Interpretation
 
-These results suggest that benchmark performance may overstate multimodal reasoning:
+These results show that benchmark performance may overstate multimodal reasoning ability:
 
-- Visual grounding is critical for direct retrieval  
-- Compositional reasoning improves with visual input but remains uniformly limited across operations  
-- Yes/no questions can often be answered without strong visual grounding  
-- Aggregate accuracy masks these structural differences  
+- Visual grounding is critical for retrieval tasks  
+- Compositional reasoning benefits from visual input but remains limited  
+- Yes/no questions are often partially answerable without strong visual grounding  
 
-The consistency across model scale and across model families indicates this is a **structural property of model behavior**, not a model-specific artifact.
+The consistency across model scale and model family suggests this is a **structural property of current VLM behavior**, not a model-specific artifact.
 
 ---
 
@@ -107,12 +116,14 @@ The consistency across model scale and across model families indicates this is a
 
 - `scripts/` — evaluation pipelines and analysis scripts  
 - `results/` — experiment outputs and summaries  
-- `notes/` — logs and research direction  
+- `notes/` — experiment logs and research direction  
 
 ---
 
 ## Status
 
-- Core counterfactual experiments complete (Qwen2-VL 2B full, 7B subset)  
-- Full subtype analysis complete (Qwen2-VL 2B)  
+- Image vs no-image evaluation complete (Qwen2-VL 2B full, 7B subset)  
+- Subtype analysis complete (Qwen2-VL 2B)  
 - Cross-model validation complete (InternVL2-4B)  
+- Statistical validation (confidence intervals) complete  
+- Final figure and analysis ready for submission  
