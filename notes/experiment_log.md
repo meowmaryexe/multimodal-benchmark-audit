@@ -77,16 +77,20 @@ Run ChartQA experiments with and without images and see how much performance act
 
 ## Update: Image Swap Experiment (May 1)
 
-Ran 7B with wrong-image condition (200 samples).
+Ran a preliminary wrong-image condition (Qwen7B, 200 samples) to test whether incorrect visual input actively degrades performance.
 
 Observations:
 - Lookup performance remains relatively high (~0.60)
-- Compositional performance similar to no-image (~0.17)
-- Result is less clean than expected
+- Compositional performance is similar to the no-image condition (~0.17)
+- Results are less interpretable than expected
 
-Notes:
-- Adjacent image swap may not be a strong counterfactual
-- Needs better control or reinterpretation
+Interpretation:
+- The adjacent-image swap does not reliably act as a strong counterfactual
+- High lookup performance suggests the model may not be tightly coupled to specific visual content under this perturbation
+- The setup introduces ambiguity (images may still share structural similarities)
+
+Conclusion:
+This experiment was not included in the main analysis due to weak control. Image removal provides a cleaner and more interpretable measure of visual reliance.
 
 ## Update: Subtype Analysis (May 1)
 
@@ -114,3 +118,56 @@ Observations:
 
 Conclusion:
 Compositional reasoning is uniformly constrained rather than highly subtype-dependent.
+
+## Update: Cross-Model Validation (May 2)
+
+Added second model family (InternVL2-4B) to test whether observed patterns generalize beyond Qwen.
+
+Setup:
+- Same evaluation pipeline
+- Same 500-sample subset used for Qwen7B
+- Evaluated both image and no-image conditions
+- Same question categorization (lookup, compositional, yes/no)
+
+Observations:
+- Lookup performance shows a large drop without image (~−0.60), consistent with Qwen
+- Compositional performance drops less (~−0.28), again matching prior results
+- Yes/no performance shows weaker dependence on image input
+
+Conclusion:
+The task-dependent visual reliance pattern generalizes across model families, not just model scale. This suggests the observed behavior is structural rather than model-specific.
+
+
+## Update: Statistical Validation (May 2)
+
+Computed Wilson 95% confidence intervals for all model/category/condition pairs.
+
+Observations:
+- Lookup (image vs no-image) shows clearly non-overlapping confidence intervals across all models
+- Compositional also shows consistent separation, though smaller than lookup
+- Yes/no intervals overlap substantially in some cases, indicating weaker and less reliable visual dependence
+
+Conclusion:
+The observed differences between image and no-image conditions are statistically robust for lookup and compositional tasks. Yes/no results are less stable due to smaller sample size and weaker signal.
+
+
+## Update: Final Consolidation (May 2)
+
+Constructed unified figure showing:
+- Image vs no-image performance
+- Three task types (lookup, compositional, yes/no)
+- Three models (Qwen2B, Qwen7B, InternVL2-4B)
+- 95% confidence intervals
+
+Observations:
+- Clear visual separation for lookup tasks
+- Consistent but smaller gap for compositional tasks
+- Overlapping or weak separation for yes/no tasks
+
+Conclusion:
+The figure makes explicit that ChartQA performance reflects a mixture of behaviors:
+- strongly visual retrieval
+- partially visual compositional reasoning
+- weakly visual or non-visual binary judgment
+
+This supports the core claim that aggregate benchmark accuracy conflates distinct capabilities.
