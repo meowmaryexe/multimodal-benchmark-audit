@@ -1,4 +1,3 @@
-# Experiment log
 
 ---
 
@@ -183,36 +182,53 @@ Strengthen empirical validation
 
 ---
 
+---
+
 ## Date: May 5
 ## Direction:
 Counterfactual modality reliance audits
 
 ## Goal of today:
-Strengthen empirical validation across models and dataset scale
+Complete full-scale validation and finalize experimental pipeline
 
 ## What I implemented:
-- Added Phi-3.5-vision (500 samples)
-- Ran full ChartQA test set for Qwen2-VL-7B
-- Standardized categorization across models
-- Updated main figure
+- Ran full ChartQA test set for Phi-3.5-vision
+- Ran full ChartQA test set for Qwen2-VL-7B (completing full coverage for Qwen models)
+- Verified and standardized categorization across all models (added "total")
+- Validated category distributions match exactly across:
+  - Qwen2B (full)
+  - Qwen7B (full)
+  - Phi-3.5-vision (full)
+  - InternVL2-4B (subset)
+- Consolidated final results into a single consistent evaluation format
 
 ## Observations:
-- Pattern holds across all models (Qwen, InternVL, Phi)
-- Full dataset confirms subset results
-- Yes/no remains noisy due to small sample size
+- Task-dependent visual reliance holds across all models and dataset scales
+- Lookup shows the largest drop without image (~−0.70 to −0.76 across full models)
+- Compositional performance is moderate (~0.40–0.55 with image) and strongly affected by image removal
+- Yes/no shows weaker and more variable dependence on visual input
+- Phi full results align closely with Qwen7B full results, strengthening cross-model consistency
+- Category counts are identical across all models after standardization
+
+## Interpretation:
+- The observed pattern is stable across:
+  - model scale (2B → 7B)
+  - model family (Qwen, InternVL, Phi)
+  - dataset size (subset → full)
+- Visual reliance is consistently ordered:
+  lookup > compositional > yes/no
+- Compositional reasoning requires visual input but remains limited in accuracy
+- Yes/no questions are partially solvable without strong visual grounding and vary more across models
 
 ## Conclusion:
-The core result is robust:
+The experimental pipeline is complete and internally consistent.
+
+The core result is strongly supported:
 
 - Visual reliance is task-dependent
-- Lookup is highly visual
-- Compositional reasoning is partially visual and limited
-- Yes/no is weakly grounded
+- Retrieval is tightly coupled to visual input
+- Compositional reasoning is partially visual but constrained
+- Binary judgments are weakly grounded and less stable
 
-This holds across:
-- model scale (2B → 7B)
-- model family
-- dataset size
-
-## Final takeaway:
-Additional models and full-scale evaluation did not change the qualitative pattern, only increased confidence in its generality.
+## Takeaway:
+Adding Phi full-scale evaluation did not change the qualitative pattern, but significantly strengthens confidence in its generality across models and scales.
