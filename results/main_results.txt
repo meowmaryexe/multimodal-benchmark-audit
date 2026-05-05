@@ -34,17 +34,17 @@ yesno: 0.500 (14/28)
 
 ---
 
-## Phi-3.5-Vision (First 500 Samples)
+## Phi-3.5-Vision (Full Test Set)
 
 WITH IMAGE
-lookup: 0.699 (216/309)
-compositional: 0.435 (74/170)
-yesno: 0.905 (19/21)
+lookup: 0.804 (1496/1860)
+compositional: 0.516 (316/612)
+yesno: 0.893 (25/28)
 
 NO IMAGE
-lookup: 0.065 (20/309)
-compositional: 0.176 (30/170)
-yesno: 0.810 (17/21)
+lookup: 0.046 (85/1860)
+compositional: 0.065 (40/612)
+yesno: 0.750 (21/28)
 
 ---
 
@@ -75,9 +75,9 @@ compositional: 0.544 → 0.077  (−0.467)
 yesno:         0.786 → 0.500  (−0.286)
 
 Phi-3.5
-lookup:        0.699 → 0.065  (−0.634)
-compositional: 0.435 → 0.176  (−0.259)
-yesno:         0.905 → 0.810  (−0.095)
+lookup:        0.804 → 0.046  (−0.758)
+compositional: 0.516 → 0.065  (−0.451)
+yesno:         0.893 → 0.750  (−0.143)
 
 InternVL2-4B
 lookup:        0.628 → 0.029  (−0.599)
