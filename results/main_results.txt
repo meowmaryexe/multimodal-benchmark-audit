@@ -1,8 +1,8 @@
 === Main Results: ChartQA Visual Reliance ===
 
 Models evaluated under image vs no-image conditions.
-Qwen 2B and Qwen 7B use the full ChartQA test set.
-InternVL2-4B and Phi-3.5-vision use the first 500 samples.
+Qwen 2B, Qwen 7B, and Phi-3.5-vision use the full ChartQA test set.
+InternVL2-4B uses the first 500 samples.
 
 ---
 
@@ -34,7 +34,7 @@ yesno: 0.500 (14/28)
 
 ---
 
-## Phi-3.5-Vision (Full Test Set)
+## Phi-3.5-vision (Full Test Set)
 
 WITH IMAGE
 lookup: 0.804 (1496/1860)
@@ -74,7 +74,7 @@ lookup:        0.812 → 0.050  (−0.762)
 compositional: 0.544 → 0.077  (−0.467)
 yesno:         0.786 → 0.500  (−0.286)
 
-Phi-3.5
+Phi-3.5-vision
 lookup:        0.804 → 0.046  (−0.758)
 compositional: 0.516 → 0.065  (−0.451)
 yesno:         0.893 → 0.750  (−0.143)
