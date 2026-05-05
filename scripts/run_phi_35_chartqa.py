@@ -11,8 +11,8 @@ from transformers import AutoModelForCausalLM, AutoProcessor
 
 
 MODEL_NAME = "microsoft/Phi-3.5-vision-instruct"
-OUTPUT_PATH = "phi35_vision_chartqa_500.csv"
-TOTAL = 500
+OUTPUT_PATH = "phi35_vision_chartqa_full.csv"
+TOTAL = 2500
 
 
 def categorize_question(question):

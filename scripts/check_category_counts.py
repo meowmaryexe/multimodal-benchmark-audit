@@ -6,7 +6,7 @@ FILES = {
     "qwen2b_full": "results/qwen/qwen2b_subtype_results_full.csv",
     "qwen7b_full": "results/qwen/qwen7b_chartqa_full.csv",
     "internvl_500": "results/internvl/internvl2_4b_chartqa_500.csv",
-    "phi_500": "results/phi35/phi35_vision_chartqa_500.csv",
+    "phi_full": "results/phi35/phi35_vision_chartqa_full.csv",
 }
 
 def categorize_question(question):
