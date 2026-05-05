@@ -1,11 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-models = ["Qwen2B", "Qwen7B", "InternVL2-4B"]
+models = ["Qwen2B", "Qwen7B", "InternVL2-4B", "Phi-3.5-vision-instruct"]
 categories = ["Lookup", "Compositional", "Yes/No"]
 
 image_color = "#4C72B0"
-no_image_color = "#DDDDDD"
+no_image_color = "#E0E0E0"
 
 data = {
     "Qwen2B": {
@@ -26,12 +26,18 @@ data = {
         "image_ci": [(0.573, 0.680), (0.329, 0.475), (0.549, 0.894)],
         "no_image_ci": [(0.015, 0.054), (0.082, 0.181), (0.283, 0.676)],
     },
+    "Phi-3.5-vision-instruct": {
+        "image": [0.699, 0.435, 0.905],
+        "no_image": [0.065, 0.176, 0.810],
+        "image_ci": [(0.646, 0.747), (0.363, 0.510), (0.711, 0.973)],
+        "no_image_ci": [(0.042, 0.098), (0.127, 0.241), (0.600, 0.923)],
+    },
 }
 
-fig, axes = plt.subplots(1, 3, figsize=(12, 3.6), sharey=True)
+fig, axes = plt.subplots(1, 4, figsize=(15.2, 3.6), sharey=True)
 
 x = np.arange(len(categories))
-width = 0.35
+width = 0.30
 
 for ax, model in zip(axes, models):
     image_vals = np.array(data[model]["image"])
@@ -54,7 +60,7 @@ for ax, model in zip(axes, models):
         label="Image",
         yerr=image_err,
         capsize=2,
-        error_kw=dict(linewidth=1),
+        error_kw={"linewidth": 1},
         color=image_color,
         edgecolor="black",
         linewidth=0.4,
@@ -64,35 +70,36 @@ for ax, model in zip(axes, models):
         x + width / 2,
         no_image_vals,
         width,
-        label="No image",
+        label="No Image",
         yerr=no_image_err,
         capsize=2,
-        error_kw=dict(linewidth=1),
+        error_kw={"linewidth": 1},
         color=no_image_color,
         edgecolor="black",
         linewidth=0.4,
-        alpha=0.85,
     )
 
-    ax.set_title(model, fontsize=12)
+    ax.set_title(model, fontsize=11)
     ax.set_xticks(x)
-    ax.set_xticklabels(categories, rotation=15, ha="right", fontsize=10)
-    ax.set_ylim(0, 0.9)
-    ax.grid(axis="y", alpha=0.25)
-    ax.tick_params(axis="y", labelsize=10)
+    ax.set_xticklabels(categories, rotation=10, ha="right", fontsize=9)
+    ax.set_ylim(0, 1.0)
+    ax.grid(axis="y", alpha=0.15)
+    ax.tick_params(axis="y", labelsize=9)
 
-axes[0].set_ylabel("Accuracy", fontsize=11)
+axes[0].set_ylabel("Exact-match accuracy", fontsize=11)
 
-fig.suptitle("Visual reliance varies by task type", fontsize=12, y=0.98)
+handles, labels = axes[0].get_legend_handles_labels()
 fig.legend(
-    ["Image", "No image"],
+    handles,
+    labels,
     loc="upper center",
     ncol=2,
     frameon=False,
-    bbox_to_anchor=(0.5, 0.93),
+    bbox_to_anchor=(0.5, 1.08),
+    fontsize=10,
 )
 
-fig.tight_layout(rect=[0, 0, 1, 0.88])
+fig.tight_layout(rect=[0, 0, 1, 0.90])
 
 plt.savefig("results/figures/main_visual_reliance.png", dpi=300, bbox_inches="tight")
 plt.savefig("results/figures/main_visual_reliance.pdf", bbox_inches="tight")
