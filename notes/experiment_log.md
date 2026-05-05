@@ -232,3 +232,26 @@ The core result is strongly supported:
 
 ## Takeaway:
 Adding Phi full-scale evaluation did not change the qualitative pattern, but significantly strengthens confidence in its generality across models and scales.
+
+---
+
+## Update: Prompt Robustness Check (May 5)
+
+Evaluated prompt variation on Qwen2-VL-2B (500 samples) using an alternate instruction:
+"Provide only the answer."
+
+## Observations:
+- Absolute accuracies change under prompt variation
+- Compositional no-image performance increases relative to the original prompt
+- Lookup still shows the largest drop without image
+- Compositional shows a moderate drop
+- Yes/no remains more variable
+
+## Interpretation:
+- The qualitative ordering of visual reliance is preserved:
+  lookup > compositional > yes/no
+- The pattern is not dependent on the exact answer-only prompt formulation
+- Prompt changes affect absolute performance, but not the structure of visual dependence
+
+## Conclusion:
+The core result is robust to prompt variation. Visual reliance remains task-dependent even under changes to prompting.
