@@ -135,3 +135,27 @@ Note:
 - Full dataset run
 - Subtypes show similar dependence on visual input
 - Yes/no remains weakly dependent and noisy
+
+---
+
+## Prompt Robustness (Qwen 2B, 500 Samples)
+
+Alternate prompt: "Provide only the answer."
+
+lookup
+image: 0.621 (192/309)
+no_image: 0.029 (9/309)
+
+compositional
+image: 0.353 (60/170)
+no_image: 0.194 (33/170)
+
+yesno
+image: 0.714 (15/21)
+no_image: 0.190 (4/21)
+
+Note:
+- Same evaluation setup with modified prompt
+- Absolute accuracies change, but relative ordering is preserved:
+  lookup > compositional > yes/no
+- Suggests the observed pattern is not specific to the exact prompt formulation
