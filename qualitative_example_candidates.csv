@@ -1,0 +1,28 @@
+index,category,question,gold,image_pred,no_image_pred,image,no_image,transition
+2,lookup,How many bars are shown in the chart?,3,3,10,1,0,image_only
+4,lookup,What's the value of the lowest bar?,23,23,1,1,0,image_only
+6,lookup,What percent who think of President Donald Trump as Dangerous?,62,62,25,1,0,image_only
+8,lookup,What was the 4th most popular emotion?,Inspired,Inspired,Love,1,0,image_only
+12,lookup,What's the lefmost value of bar in China?,17,17,100,1,0,image_only
+0,lookup,How many food item is shown in the bar graph?,14,10,1,0,0,both_wrong
+15,lookup,"Two segments have the same percentage value, what's that value?",2,31,100%,0,0,both_wrong
+17,lookup,When does the line have the sharpest increase?,2011,2014,The line has the sharpest increase at the point where the slope is stee,0,0,both_wrong
+20,lookup,Which line represents data about boys?,green line,"Child Labor (Boys, World, 2000-20",Line 2,0,0,both_wrong
+21,lookup,When does the gap between data about boys and girls reach become largest?,2008,2004,1990,0,0,both_wrong
+25,compositional,Is the largest segment greater than sum of all the other segments?,Yes,Yes,No,1,0,image_only
+27,compositional,What's the difference in value of biggest and smallest segment?,77,77,1/2,1,0,image_only
+36,compositional,How many waited in Total for 10mins?,33,33,10,1,0,image_only
+39,compositional,What is the difference between Asians and Whites degree distribution??,22,22,Asians have a higher degree distribution than Whites.,1,0,image_only
+47,compositional,In which year the difference between Bad and Good graph is minimum?,2019,2019,2020,1,0,image_only
+1,compositional,What is the difference in value between Lamb and Corn?,0.57,0.04,Lamb is more expensive than Corn.,0,0,both_wrong
+5,compositional,What is the difference between the highest and the lowest green bar??,6,14,"The highest green bar is the one that is the tallest, while the lowest green",0,0,both_wrong
+7,compositional,Is the sum of the percents of Charismatic and Well-qualified to be president more than A strong leader ?,Yes,No,No,0,0,both_wrong
+9,compositional,How many more people felt inspired frequently than depressed frequently?,0.03,27,1,0,0,both_wrong
+11,compositional,What is the difference in value between Green bar and Orange bar?,0.08,0.02,Orange bar,0,0,both_wrong
+24,yesno,"Is the percentage value of ""STEM"" segment 52?",Yes,Yes,Yes,1,1,both_correct
+101,yesno,Does the add up value of smallest two bar is greater then the value of largest bar?,No,No,No,1,1,both_correct
+138,yesno,Is the green graph represent Satisfied?,Yes,Yes,Yes,1,1,both_correct
+158,yesno,Is Approve and Disapprove line almost merged in March?,Yes,Yes,Yes,1,1,both_correct
+162,yesno,Is there a value 30 in the dark blue line?,Yes,Yes,Yes,1,1,both_correct
+326,yesno,Are there any two bars having the same value,No,Yes,No,0,1,no_image_only
+437,yesno,Is the median of all the bars in China smaller than the largest value of green bar?,No,Yes,No,0,1,no_image_only

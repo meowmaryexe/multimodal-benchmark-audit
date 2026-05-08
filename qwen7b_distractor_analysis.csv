@@ -1,0 +1,10 @@
+category,condition,correct,total,accuracy
+lookup,image,228,309,0.7378640776699029
+lookup,no_image,12,309,0.038834951456310676
+lookup,distractor_image,11,309,0.03559870550161812
+compositional,image,83,170,0.48823529411764705
+compositional,no_image,33,170,0.19411764705882353
+compositional,distractor_image,32,170,0.18823529411764706
+yesno,image,16,21,0.7619047619047619
+yesno,no_image,11,21,0.5238095238095238
+yesno,distractor_image,8,21,0.38095238095238093

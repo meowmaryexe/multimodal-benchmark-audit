@@ -1,0 +1,13 @@
+model,category,total_examples,both_correct,image_only_correct,no_image_only_correct,both_wrong,visual_dependence_rate
+Qwen2-VL-2B,lookup,1860,51,1337,12,460,0.963
+Qwen2-VL-2B,compositional,612,28,219,18,347,0.887
+Qwen2-VL-2B,yesno,28,9,12,2,5,0.571
+Qwen2-VL-7B,lookup,1860,80,1431,13,336,0.947
+Qwen2-VL-7B,compositional,612,30,303,17,262,0.91
+Qwen2-VL-7B,yesno,28,11,11,3,3,0.5
+Phi-3.5-vision,lookup,1860,74,1422,11,353,0.951
+Phi-3.5-vision,compositional,612,26,290,14,282,0.918
+Phi-3.5-vision,yesno,28,21,4,0,3,0.16
+InternVL2-4B,lookup,309,8,186,1,114,0.959
+InternVL2-4B,compositional,170,13,55,8,94,0.809
+InternVL2-4B,yesno,21,6,10,4,1,0.625
