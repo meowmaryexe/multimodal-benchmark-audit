@@ -104,3 +104,65 @@ scripts/      evaluation pipelines and analysis scripts
 results/      experiment outputs and processed results
 figures/      consolidated paper figures and appendix figures
 notes/        experiment logs, framing notes, and research directions
+
+## Main Experimental Directions
+
+### Counterfactual Modality Interventions
+- image removal
+- distractor-image replacement
+- prompt variation
+
+### Behavioral Analysis
+- correct → incorrect transition tracking
+- task-specific modality dependence
+- qualitative failure inspection
+
+### Cross-Model Validation
+- model scale comparisons
+- model family comparisons
+- benchmark replication
+
+---
+
+## Current Limitations
+
+- Analysis is currently concentrated in chart QA
+- Some evaluations remain subset-based
+- Task categorization is heuristic
+- Findings are behavioral/descriptive rather than mechanistic
+
+---
+
+## Future Directions
+
+Potential next steps include:
+
+- full InternVL evaluation
+- broader PlotQA replication
+- OCR perturbation experiments
+- partial chart masking
+- structured distractor generation
+- mechanistic analysis of cross-modal behavior
+- extension to document QA and table QA benchmarks
+
+---
+
+## Status
+
+This is an active research project.
+
+The main empirical pattern is stable across models, scales, prompts, and benchmarks tested so far, but the project is still evolving through:
+
+- expanded evaluations
+- stronger counterfactual controls
+- additional benchmark validation
+- deeper behavioral analysis
+
+---
+
+## Notes
+
+See:
+
+- `notes/experiment_log.md` for chronological experiment history
+- `notes/idea_filter.md` for framing, failed directions, risks, and future plans
