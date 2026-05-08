@@ -1,97 +1,106 @@
-# When Do Models Look? Task-Dependent Visual Reliance in Chart Reasoning
+# What Do Chart Question Answering Benchmarks Measure?
+## Task-Specific Visual Evidence Dependence in Vision-Language Models
 
 ## Overview
 
-This project studies how vision-language models (VLMs) use visual input when answering chart-based questions.
+This project studies how vision-language models (VLMs) use visual evidence when answering chart-based questions.
 
-Multimodal benchmarks such as ChartQA are often used as evidence of visual reasoning ability. However, aggregate accuracy does not distinguish between visually grounded behavior and reliance on non-visual patterns.
+Multimodal benchmarks such as ChartQA are often interpreted as evidence of visual reasoning ability. However, aggregate benchmark accuracy may obscure whether models depend on visual information in the same way across different task types.
 
-This work investigates **when visual input actually matters**, using a simple counterfactual evaluation setup.
-
----
-
-## Core Idea
-
-We evaluate models under two conditions:
-
-- **With image** — standard multimodal input  
-- **Without image** — text-only input (image removed)  
-
-Performance is analyzed by question type:
-
-- **Lookup** — direct value retrieval  
-- **Compositional** — multi-step reasoning (difference, ratio, average, etc.)  
-- **Yes/No** — binary comparisons  
+This work investigates task-specific visual evidence dependence using counterfactual modality interventions.
 
 ---
 
-## Current Findings (in progress)
+## Core Question
 
-Preliminary results across multiple models show a consistent pattern:
+To what extent do vision-language models rely on matched visual evidence when answering chart questions, and how does this dependence vary across task types?
 
-- Removing the image causes a large drop in **lookup** performance  
-- **Compositional** performance drops less, but still consistently  
-- **Yes/no** questions show weaker and more variable dependence  
+---
 
-This pattern appears:
-- across model scale (Qwen2-VL 2B → 7B)  
-- across model families (Qwen, InternVL, Phi)  
+## Approach
+
+Models are evaluated under multiple counterfactual conditions:
+
+- **Matched image** — standard multimodal input  
+- **No image** — image removed entirely  
+- **Distractor image** — unrelated chart paired with the question  
+
+Questions are partitioned into:
+
+- **Lookup** — direct value extraction  
+- **Compositional** — multi-step numerical reasoning (difference, ratio, average, total, etc.)  
+- **Yes/No** — binary comparisons and judgments  
+
+The project analyzes:
+- task-specific accuracy changes
+- behavioral transitions after image removal
+- dependence on matched versus generic chart-like visual input
+
+---
+
+## Current Findings
+
+Across multiple VLM families and scales, a consistent qualitative pattern emerges:
+
+- Removing the image produces the largest and most consistent degradation for **lookup** questions
+- **Compositional** questions also depend substantially on visual input, but remain difficult even with images
+- **Yes/no** questions show weaker and more variable dependence on visual evidence
+
+Additional findings:
+- Lookup examples overwhelmingly transition from correct → incorrect after image removal
+- Distractor-image performance for lookup and compositional questions falls close to no-image levels
+- The same qualitative asymmetry appears on a PlotQA-derived evaluation subset
+
+The pattern currently holds across:
+- Qwen2-VL-2B
+- Qwen2-VL-7B
+- InternVL2-4B
+- Phi-3.5-vision-instruct
 
 ---
 
 ## Key Insight
 
-Visual reliance is **task-dependent**, not uniform.
+Visual reliance is strongly task-dependent rather than uniform.
 
-Benchmark accuracy reflects a mixture of:
-- visually grounded retrieval  
-- partially visual reasoning  
-- weakly visual or non-visual judgment  
+Aggregate chart QA benchmark accuracy appears to combine multiple qualitatively distinct behaviors, including:
+- direct visually grounded extraction
+- partially grounded compositional reasoning
+- weaker or less stable multimodal dependence
 
-This suggests that standard multimodal benchmarks may conflate distinct capabilities rather than measuring a single notion of visual reasoning.
+This suggests that standard multimodal benchmark scores may conflate distinct capabilities rather than measuring a single notion of visual reasoning.
 
 ---
 
-## Current Experiments
+## Experiments
 
-Completed:
+### Completed
 - Qwen2-VL-2B (full ChartQA)
-- Qwen2-VL-7B (subset + full)
-- InternVL2-4B (subset)
-- Phi-3.5-vision (subset)
-- Subtype analysis (Qwen2-VL-2B)
-- Statistical validation (confidence intervals)
+- Qwen2-VL-7B (full ChartQA)
+- Phi-3.5-vision-instruct (full ChartQA)
+- InternVL2-4B (500-sample evaluation)
+- Prompt robustness evaluation
+- Behavioral transition analysis
+- Distractor-image evaluation
+- Compositional subtype analysis
+- Wilson confidence interval analysis
+- PlotQA-derived replication subset
+- Final NeurIPS submission experiments
 
-In progress:
-- InternVL2 full evaluation  
-- Phi-3.5 full evaluation  
-- Categorization standardization across all models  
-- Robustness checks (prompt variation / alternative settings)  
-- Final figure construction  
+### Ongoing
+- Full-scale InternVL2-4B evaluation
+- PlotQA replication for additional model families
+- Stronger perturbation-based counterfactuals
+- Additional multimodal benchmark validation
+- Extended qualitative failure analysis
+- Go ask nicely for more compute... 
 
 ---
 
 ## Repository Structure
 
-scripts/   # evaluation pipelines and analysis scripts
-results/   # experiment outputs and intermediate results
-notes/     # experiment logs and research framing
-
----
-
-## Status
-
-This is an **active research project**.
-
-The core empirical pattern is stable, but:
-- additional models are being run at full scale  
-- results are being standardized across pipelines  
-- final figures and analysis are being consolidated  
-
----
-
-## Notes
-
-See:
-- `notes/experiment_log.md` for detailed experiment history  
-- `notes/idea_filter.md` for research framing  
+```text
+scripts/      evaluation pipelines and analysis scripts
+results/      experiment outputs and processed results
+figures/      consolidated paper figures and appendix figures
+notes/        experiment logs, framing notes, and research directions
