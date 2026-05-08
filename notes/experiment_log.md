@@ -255,3 +255,170 @@ Evaluated prompt variation on Qwen2-VL-2B (500 samples) using an alternate instr
 
 ## Conclusion:
 The core result is robust to prompt variation. Visual reliance remains task-dependent even under changes to prompting.
+
+---
+
+## Update: Behavioral Transition Analysis (May 5)
+
+## Goal:
+Understand how individual examples change behavior after image removal.
+
+## What I implemented:
+- Computed transition buckets:
+  - both correct
+  - image-only correct
+  - no-image-only correct
+  - both wrong
+- Added visual dependence rate (VDR):
+  fraction of image-correct examples that become incorrect after image removal
+- Ran analysis across:
+  - Qwen2B
+  - Qwen7B
+  - Phi-3.5-vision
+  - InternVL2-4B
+
+## Observations:
+- Lookup examples are overwhelmingly image-only correct
+- Lookup VDR is extremely high across models
+- Compositional questions also show strong image dependence
+- Many compositional examples remain incorrect even with image access
+- Yes/no behavior is more variable
+
+## Interpretation:
+- Lookup behavior is tightly coupled to visual extraction
+- Compositional reasoning requires visual input but is also limited by reasoning failures
+- Yes/no questions are less consistently grounded in visual evidence
+
+## Next step:
+Add representative qualitative examples for transition categories
+
+---
+
+## Update: Qualitative Example Collection (May 5)
+
+## Goal:
+Collect representative examples illustrating different transition behaviors.
+
+## What I implemented:
+- Extracted examples for:
+  - lookup image-only correct
+  - lookup both wrong
+  - compositional image-only correct
+  - compositional both wrong
+  - yes/no both correct
+  - yes/no no-image-only correct
+- Generated candidate qualitative panels for appendix figures
+
+## Observations:
+- Lookup failures without images are often severe
+- Compositional failures persist even with visual access
+- Some yes/no questions remain answerable without image grounding
+
+## Interpretation:
+Different task types exhibit qualitatively different dependence on visual input.
+
+## Next step:
+Revisit distractor-image experiments with stronger controls
+
+---
+
+## Update: Distractor-Image Evaluation (May 6)
+
+## Goal:
+Test whether models rely on matched chart evidence versus generic chart-like input.
+
+## What I implemented:
+- Built distractor-image evaluation on 500-example ChartQA subset
+- Replaced charts with unrelated random charts
+- Fixed random seed for reproducibility
+- Evaluated Qwen2-VL-7B under:
+  - matched image
+  - no image
+  - distractor image
+
+## Observations:
+- Lookup distractor accuracy falls close to no-image performance
+- Compositional distractor accuracy also approaches no-image condition
+- Yes/no remains more variable
+
+## Interpretation:
+- Strong distractor controls are much cleaner than the earlier adjacent-image swap
+- Models depend on matched chart evidence rather than generic image presence
+
+## Decision:
+Include distractor-image analysis in final experiments
+
+---
+
+## Update: PlotQA Replication (May 6)
+
+## Goal:
+Test whether the observed asymmetry generalizes beyond ChartQA.
+
+## What I implemented:
+- Built PlotQA-derived evaluation subset:
+  - 1000 charts
+  - up to 5 QA pairs per chart
+- Implemented evaluation pipeline for:
+  - Qwen2-VL-2B
+  - Qwen2-VL-7B
+- Applied same:
+  - categorization
+  - prompting
+  - normalization
+  - image-removal intervention
+
+## Observations:
+- Same qualitative ordering appears on PlotQA-derived evaluation
+- Lookup nearly collapses without image input
+- Compositional drops substantially
+- Yes/no remains comparatively stable
+
+## Interpretation:
+Task-dependent visual reliance generalizes beyond a single benchmark.
+
+## Next step:
+Finalize consolidated figures and tables
+
+---
+
+## Update: Final Experimental Consolidation (May 6–7)
+
+## Goal:
+Standardize and finalize all experimental outputs.
+
+## What I implemented:
+- Finalized:
+  - transition analysis tables
+  - distractor analysis tables
+  - PlotQA replication tables
+  - appendix figures
+- Verified consistency across:
+  - category counts
+  - normalization
+  - prompts
+  - evaluation scripts
+- Consolidated final figure set across all models
+
+## Observations:
+- The qualitative ordering remains stable across:
+  - models
+  - scales
+  - datasets
+  - prompt variants
+- Lookup consistently shows strongest visual dependence
+- Compositional dependence is substantial but incomplete
+- Yes/no remains weaker and less stable
+
+## Interpretation:
+Aggregate chart QA accuracy combines behaviors with substantially different dependence on visual evidence. The results consistently suggest that benchmark-level performance can obscure important differences between direct visual extraction, partially grounded compositional reasoning, and weaker forms of multimodal dependence.
+
+## Remaining questions:
+- To what extent are compositional failures driven by reasoning limitations versus visual extraction failures?
+- How sensitive are the observed patterns to alternative prompting strategies or evaluation formats?
+- Would stronger chart-domain generalization tests change the relative dependence patterns?
+- How much of yes/no performance is driven by dataset priors versus genuine visual grounding?
+- Do similar asymmetries appear in other multimodal QA domains beyond charts?
+
+## Ongoing direction:
+Continue refining the evaluation framing, extending cross-benchmark validation, and improving analysis of modality dependence beyond aggregate benchmark accuracy.
