@@ -422,3 +422,48 @@ Aggregate chart QA accuracy combines behaviors with substantially different depe
 
 ## Ongoing direction:
 Continue refining the evaluation framing, extending cross-benchmark validation, and improving analysis of modality dependence beyond aggregate benchmark accuracy.
+
+## Update: Latency Profiling + Compute Analysis (May 29)
+
+## Goal:
+Measure the inference-time cost difference between multimodal and text-only evaluation settings.
+
+## What I implemented:
+- Built latency benchmarking pipeline for:
+  - image condition
+  - no-image condition
+- Added deterministic timing measurements for Qwen2-VL-2B on ChartQA
+- Logged:
+  - per-example latency
+  - average latency
+  - throughput estimates
+  - relative latency reduction
+- Saved structured CSV outputs for downstream analysis
+
+## Observations:
+- No-image inference is substantially faster than multimodal inference
+- Initial measurements show roughly 30% lower latency without image processing
+- Throughput increases noticeably in the no-image condition
+- The largest performance degradations remain concentrated in lookup questions
+
+## Interpretation:
+Visual processing contributes meaningful inference overhead in chart QA settings.
+
+The results suggest that:
+- some question categories are tightly coupled to visual computation
+- others may tolerate partial reduction in image usage with smaller performance degradation
+
+This creates a measurable tradeoff between:
+- visual grounding
+- inference cost
+- throughput
+
+## Caveats:
+- Current measurements are hardware-dependent
+- Timing was measured on a limited subset
+- Results should be interpreted as preliminary profiling rather than full systems benchmarking
+
+## Next step:
+- Extend latency measurements to additional model families
+- Compare scaling behavior across model sizes
+- Investigate category-specific compute-performance tradeoffs

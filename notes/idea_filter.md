@@ -261,3 +261,117 @@ Ongoing:
 - GitHub/codebase organization
 - Additional cross-benchmark validation
 - Extended model coverage
+
+## Update: Latency Profiling + Compute Tradeoff Analysis
+
+### Motivation
+A recurring question throughout the project was whether all chart QA questions truly require the same level of multimodal computation.
+
+The behavioral results suggested a possible asymmetry:
+- some tasks appear tightly dependent on visual input
+- others appear partially solvable without strong visual grounding
+
+This motivated preliminary investigation into the compute implications of modality dependence.
+
+---
+
+## What Was Added
+
+### Latency benchmarking pipeline
+Implemented timing-based evaluation for:
+
+- image condition
+- no-image condition
+
+using:
+- Qwen2-VL-2B
+- deterministic inference
+- ChartQA examples
+
+The pipeline logs:
+- per-example latency
+- average latency
+- approximate throughput
+- relative latency reduction
+
+Outputs are saved to structured CSV files for downstream analysis.
+
+---
+
+## Preliminary Observation
+
+Initial profiling shows:
+
+- text-only inference is substantially faster than multimodal inference
+- no-image runs achieve noticeably higher throughput
+- removing image processing reduced average latency by roughly 30% in initial tests
+
+At the same time:
+- lookup questions remain highly dependent on matched visual evidence
+- some weaker-dependence categories may permit partial reduction in image usage
+
+---
+
+## Interpretation
+
+The results suggest a measurable tradeoff between:
+- visual grounding
+- inference cost
+- throughput
+
+This does NOT demonstrate an adaptive routing system.
+
+However, it does suggest that:
+- modality dependence may have practical systems implications
+- task-dependent visual reliance could potentially inform selective multimodal computation strategies
+- benchmark-level multimodal evaluation may hide meaningful efficiency-relevance differences between task types
+
+---
+
+## Important Caveats
+
+- Measurements are preliminary and hardware-dependent
+- Timing was measured on a limited subset
+- No adaptive routing policy was implemented
+- Results should be interpreted as exploratory profiling rather than systems benchmarking
+
+---
+
+## Why This Direction Was Kept
+
+The latency results remained consistent with the main behavioral findings:
+- strongest visual-dependence categories also appear least compatible with image bypass
+- weaker-dependence categories may admit more flexible compute tradeoffs
+
+This strengthened confidence that the observed modality asymmetries are not only statistically visible, but potentially relevant to real inference settings.
+
+---
+
+## Remaining Questions
+
+- How stable are latency reductions across larger models?
+- Do throughput gains scale with image resolution or context length?
+- Can task-specific modality dependence predict useful routing behavior?
+- Which question types tolerate reduced visual computation without severe quality collapse?
+- Would adaptive routing meaningfully improve efficiency-quality tradeoffs in practice?
+
+---
+
+## New Risks / Constraints Identified
+
+- Efficiency framing can become speculative without direct routing experiments
+- Hardware-dependent timing measurements are difficult to compare across environments
+- Small latency benchmarks can overstate practical systems impact
+- Throughput gains alone do not imply acceptable answer quality
+
+---
+
+## Current Decision
+
+Keep the compute-efficiency direction exploratory and tightly connected to empirical modality-dependence results.
+
+The project remains fundamentally centered on:
+- multimodal evaluation behavior
+- task-specific visual dependence
+- counterfactual modality interventions
+- interpretation of benchmark accuracy
